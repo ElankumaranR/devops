@@ -1,0 +1,58 @@
+Kubernetics :
+
+* every application has many microservice which are containerized , kubernetics helps to orchestrate these containers.
+AWS - EKS (Elastic Kubernetics services)
+
+*the place where multiple containers running is called pod
+*every machine(worker node) has multiple pods
+*S3 act as Master node which has k8s manage other working nodes
+
+componets:
+
+*Master node -> Api(for communication),scheduler(decide where to create container by which worker node has low workload ),
+control manager(to delete ,create, roll back, roll out the containers and pods),etcd(distributer/etc)(information about entire architecture)
+
+*worker node -> kubelet(get info from master node and execute it), kube proxy(it routes the traffic and act as load balance)
+
+
+install Mini kube:
+* decent spec,atleast 8gb ram
+
+Task1:
+elan@kumaran:~$ kubectl create deployment elankumaran21 --image=elankumaran21/dev:latest --port=80
+deployment.apps/elankumaran21 created
+
+elan@kumaran:~$ kubectl expose deployment elankumaran21 --port=80 --type=NodePort
+service/elankumaran21 exposed
+
+elan@kumaran:~$ kubectl get svc
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+elankumaran21   NodePort    10.104.142.23   <none>        80:32269/TCP   6s
+kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        20h
+
+elan@kumaran:~$ kubectl get pods
+NAME                             READY   STATUS              RESTARTS   AGE
+elankumaran21-644697d7cb-2rhtg   0/1     ContainerCreating   0          24s
+
+elan@kumaran:~$ kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+elankumaran21-644697d7cb-2rhtg   1/1     Running   0          34s
+
+elan@kumaran:~$ minikube service elankumaran21
+|-----------|---------------|-------------|---------------------------|
+| NAMESPACE |     NAME      | TARGET PORT |            URL            |
+|-----------|---------------|-------------|---------------------------|
+| default   | elankumaran21 |          80 | http://192.168.49.2:32269 |
+|-----------|---------------|-------------|---------------------------|
+🏃  Starting tunnel for service elankumaran21.
+|-----------|---------------|-------------|------------------------|
+| NAMESPACE |     NAME      | TARGET PORT |          URL           |
+|-----------|---------------|-------------|------------------------|
+| default   | elankumaran21 |             | http://127.0.0.1:41935 |
+|-----------|---------------|-------------|------------------------|
+🎉  Opening service default/elankumaran21 in default browser...
+👉  http://127.0.0.1:41935
+❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
+
+Task 2:
+

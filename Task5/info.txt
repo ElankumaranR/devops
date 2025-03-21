@@ -1,0 +1,28 @@
+Task 5: Building Tool
+
+* Maven - Build automation tool (other tool Gradle)
+* Maven runs pom.xml
+*pom.xml has dependencies and plugins for source code
+
+commands:
+*mvn clean - delete previous maven build
+*mvn test - it runs the test cases and create a test report(generate in target folder)
+*mvn install - it will install the plugins and dependencies
+*mvn package - it will package the entire application into War or Jar file(which can be deployed)
+
+* maven output saved in target folder
+
+war file(index.html) using(nginx)tomcat
+
+Steps:
+
+1.clone
+2.maven install
+3.in the repo run maven test
+4.maven clean to clean build and run maven install
+5.maven pakage gives warp file 
+6.same name in docker file war and created file(dont run in target file)
+7.docker build -t image-name .
+8. push the image (login,tag,push)
+9.minikube start
+10.create deployement ,expose, service -> pet app
